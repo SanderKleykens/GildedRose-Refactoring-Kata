@@ -100,6 +100,26 @@ class GildedRoseTest {
     }
 
     @Test
+    void conjuredItem_DegradesQualityTwiceAsFast_BeforeSellIn() {
+        Item item = new Item("Conjured Mana Cake", 3, 6);
+        GildedRose gildedRose = new GildedRose(item);
+
+        gildedRose.updateQuality();
+
+        assertThat(gildedRose.getItems()).satisfiesExactly(itemAssertion(item.name, 2, 4));
+    }
+
+    @Test
+    void conjuredItem_DegradesQualityTwiceAsFast_AfterSellIn() {
+        Item item = new Item("Conjured Mana Cake", 0, 6);
+        GildedRose gildedRose = new GildedRose(item);
+
+        gildedRose.updateQuality();
+
+        assertThat(gildedRose.getItems()).satisfiesExactly(itemAssertion(item.name, -1, 2));
+    }
+
+    @Test
     void agedBrie_QualityNeverExceeds50() {
         Item item = new Item("Aged Brie", 1, 49);
         GildedRose gildedRose = new GildedRose(item);
